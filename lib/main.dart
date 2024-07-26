@@ -5,8 +5,10 @@ import 'package:delivery_flutter/core/auth/auth_use_case.dart';
 import 'package:delivery_flutter/core/customers/customer_use_case.dart';
 import 'package:delivery_flutter/core/http/http_client.dart';
 import 'package:delivery_flutter/presentation/pages/factories.dart';
+import 'package:delivery_flutter/presentation/pages/presenters/getx_customer_detail_page_presenter.dart';
 import 'package:delivery_flutter/presentation/pages/presenters/getx_homepage_presenter.dart';
 import 'package:delivery_flutter/presentation/pages/presenters/getx_splash_presenter.dart';
+import 'package:delivery_flutter/ui/pages/customerDetails/customer_details_page_presenter.dart';
 import 'package:delivery_flutter/ui/pages/homepage/homepage_presenter.dart';
 import 'package:delivery_flutter/ui/pages/splash/splash_presenter.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +31,8 @@ class MyApp extends StatelessWidget {
         GetxSplashPresenter(AuthUseCase(AuthRepositoryImpl())));
     Get.put<HomepagePresenter>(
         GetxHomepagePresenter(CustomerUseCase(CustomerRepositoryImpl())));
+    Get.put<CustomerDetailsPagePresenter>(GetxCustomerDetailPagePresenter(
+        CustomerUseCase(CustomerRepositoryImpl())));
 
     return GetMaterialApp(
       title: 'Delivery',

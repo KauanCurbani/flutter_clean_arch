@@ -11,10 +11,10 @@ class CustomerDetail {
   String state;
   String zipCode;
   List<PhoneNumber> phones;
-  String contactName;
+  String? contactName;
   bool blocked;
-  String email;
-  String activityBranchName;
+  String? email;
+  String? activityBranchName;
   bool simplesNacional;
   String type;
   bool appliedSt;
@@ -35,10 +35,10 @@ class CustomerDetail {
     required this.state,
     required this.zipCode,
     required this.phones,
-    required this.contactName,
+    this.contactName,
     required this.blocked,
-    required this.email,
-    required this.activityBranchName,
+    this.email,
+    this.activityBranchName,
     required this.simplesNacional,
     required this.type,
     required this.appliedSt,
@@ -60,15 +60,17 @@ class CustomerDetail {
       city: json['city'],
       state: json['state'],
       zipCode: json['zipCode'],
-      phones: List<PhoneNumber>.from(json['phones'].map((x) => PhoneNumber.fromJson(x))),
+      phones: List<PhoneNumber>.from(
+          json['phones'].map((x) => PhoneNumber.fromJson(x))),
       contactName: json['contactName'],
       blocked: json['blocked'],
       email: json['email'],
       activityBranchName: json['activityBranchName'],
       simplesNacional: json['simplesNacional'],
       type: json['type'],
-      appliedSt: json['appliedSt'],
-      paymentPlans: List<PaymentPlan>.from(json['paymentPlans'].map((x) => PaymentPlan.fromJson(x))),
+      appliedSt: json['appliedSt'] ?? false,
+      paymentPlans: List<PaymentPlan>.from(
+          json['paymentPlans'].map((x) => PaymentPlan.fromJson(x))),
       partnerId: json['partnerId'],
       creditLimit: json['creditLimit'].toDouble(),
     );

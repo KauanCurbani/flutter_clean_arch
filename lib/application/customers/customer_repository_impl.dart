@@ -1,5 +1,5 @@
 import 'package:delivery_flutter/core/customers/customer.dart';
-import 'package:delivery_flutter/core/customers/customer_datails.dart';
+import 'package:delivery_flutter/core/customers/customer_details.dart';
 import 'package:delivery_flutter/core/customers/customer_repository.dart';
 import 'package:delivery_flutter/core/http/http_client.dart';
 import 'package:get/get.dart';
@@ -28,7 +28,11 @@ class CustomerRepositoryImpl implements CustomerRepository {
 
   @override
   Future<CustomerDetail> getCustomerDetail(String id) async {
-    // TODO: implement getCustomerDetail
-    throw UnimplementedError();
+    var response = await _httpClient.request(
+      url: "/sales-force/customer/$id",
+      method: "GET",
+    );
+
+    return CustomerDetail.fromJson(response);
   }
 }
