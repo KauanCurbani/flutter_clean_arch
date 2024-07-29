@@ -1,16 +1,6 @@
-import 'package:delivery_flutter/application/auth/auth_repository_impl.dart';
-import 'package:delivery_flutter/application/customers/customer_repository_impl.dart';
-import 'package:delivery_flutter/application/http/dio_http_client.dart';
-import 'package:delivery_flutter/core/auth/auth_use_case.dart';
-import 'package:delivery_flutter/core/customers/customer_use_case.dart';
-import 'package:delivery_flutter/core/http/http_client.dart';
 import 'package:delivery_flutter/presentation/pages/factories.dart';
-import 'package:delivery_flutter/presentation/pages/presenters/getx_customer_detail_page_presenter.dart';
-import 'package:delivery_flutter/presentation/pages/presenters/getx_homepage_presenter.dart';
-import 'package:delivery_flutter/presentation/pages/presenters/getx_splash_presenter.dart';
-import 'package:delivery_flutter/ui/pages/customerDetails/customer_details_page_presenter.dart';
-import 'package:delivery_flutter/ui/pages/homepage/homepage_presenter.dart';
-import 'package:delivery_flutter/ui/pages/splash/splash_presenter.dart';
+import 'package:delivery_flutter/shared/injection.dart';
+import 'package:delivery_flutter/shared/make_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:get/route_manager.dart';
@@ -26,33 +16,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     RouteObserver observer = Get.put<RouteObserver>(RouteObserver());
-    Get.put<HttpClient>(DioHttpClient());
-
-    Get.put<SplashPresenter>(
-        GetxSplashPresenter(AuthUseCase(AuthRepositoryImpl())));
-    Get.put<HomepagePresenter>(
-        GetxHomepagePresenter(CustomerUseCase(CustomerRepositoryImpl())));
-    Get.put<CustomerDetailsPagePresenter>(GetxCustomerDetailPagePresenter(
-        CustomerUseCase(CustomerRepositoryImpl())));
+    getxInjection();
+ 
 
     return GetMaterialApp(
       title: 'Delivery',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
-        useMaterial3: true,
-      ),
+      theme: makeTheme(),
       initialRoute: "/splash",
       navigatorObservers: [observer],
       getPages: [
-        GetPage(
-          name: '/',
-          page: makeHomepage,
-        ),
-        GetPage(
-          name: '/splash',
-          page: makeSplash,
-        ),
-        GetPage(name: "/customer/:id", page: makeCustomerDetails)
+        GetPage(name: "/login", page: makeLoginPage),
+        GetPage(name: '/', page: makeHomepage),
+        GetPage(name: '/splash', page: makeSplash),
+        GetPage(name: "/customer/:id", page: makeCustomerDetails),
       ],
     );
   }

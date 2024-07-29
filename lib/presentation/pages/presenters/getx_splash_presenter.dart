@@ -25,9 +25,9 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
     try {
       await checkAccount();
       // temporary login
-      await authUseCase.authenticate("curbanii", "admin");
+      // await authUseCase.authenticate("curbanii", "admin");
 
-      goTo("/");
+      goTo("/login");
     } catch (e) {
       Get.snackbar("Falha ao tentar entrar!", e.toString(),
           snackPosition: SnackPosition.TOP, icon: const Icon(Icons.error));

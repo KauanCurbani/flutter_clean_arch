@@ -24,7 +24,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
     _httpClient.addHeader("Authorization", "Bearer ${response["token"]}");
 
-    return {};
+    return {"token": response["token"]};
   }
 
   @override
