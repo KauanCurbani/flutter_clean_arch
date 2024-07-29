@@ -10,12 +10,12 @@ class GetxCustomerDetailPagePresenter extends GetxController
   GetxCustomerDetailPagePresenter(this._customerUseCase);
 
   CustomerDetail? _customerDetail;
-  final Rx<bool> _loading = false.obs;
+  final RxBool _loading = false.obs;
 
   @override
   CustomerDetail? get customerDetail => _customerDetail;
   @override
-  bool get isLoading => _loading.value;
+  RxBool get isLoading => _loading;
 
   @override
   Future<void> getCustomerDetail(String id) async {

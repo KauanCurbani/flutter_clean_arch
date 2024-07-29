@@ -1,4 +1,5 @@
 import 'package:delivery_flutter/core/customers/customer.dart';
+import 'package:delivery_flutter/core/customers/customer_details.dart';
 import 'package:delivery_flutter/core/customers/customer_repository.dart';
 import 'package:delivery_flutter/core/customers/customer_use_case.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -10,6 +11,27 @@ import 'customer_use_case_test.mocks.dart';
 @GenerateMocks([CustomerRepository])
 void main() {
   late CustomerRepository customerRepository;
+
+  CustomerDetail _defaultCustomerDetail = CustomerDetail(
+      id: "1",
+      externalCode: "1",
+      cnpj: "20548325000110",
+      ie: "1",
+      name: "1",
+      tradeName: "1",
+      street: "1",
+      district: "1",
+      city: "1",
+      state: "1",
+      zipCode: "1",
+      phones: [],
+      blocked: false,
+      simplesNacional: false,
+      type: "1",
+      appliedSt: false,
+      paymentPlans: [],
+      partnerId: "1",
+      creditLimit: 1);
   Customer cnpjCustomer = Customer(
     cnpj: "96002319000125",
     name: "any_name",
@@ -66,5 +88,25 @@ void main() {
     var response = await sut.getCustomers(null);
     // assert
     expect(response[0].cnpj, "584.853.590-62");
+  });
+
+  test("should call repository to get customer by id", () async {
+    when(customerRepository.getCustomerDetail("any_id"))
+        .thenAnswer((_) async => _defaultCustomerDetail);
+
+    var sut = CustomerUseCase(customerRepository);
+    await sut.getCustomerDetail("any_id");
+
+    verify(customerRepository.getCustomerDetail("any_id")).called(1);
+  });
+
+  test("should format cnpj on getCustomerDetail", () async {
+    when(customerRepository.getCustomerDetail("any_id"))
+        .thenAnswer((_) async => _defaultCustomerDetail);
+
+    var sut = CustomerUseCase(customerRepository);
+    var response = await sut.getCustomerDetail("any_id");
+
+    expect(response.cnpj, "20.548.325/0001-10");
   });
 }

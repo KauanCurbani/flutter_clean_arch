@@ -14,7 +14,7 @@ void main() {
       GetxCustomerDetailPagePresenter(MockCustomerUseCase());
   CustomerUseCase customerUseCaseMock = MockCustomerUseCase();
 
-  CustomerDetail _defaultCustomerDetail = CustomerDetail(
+  CustomerDetail defaultCustomerDetail = CustomerDetail(
       id: "1",
       externalCode: "1",
       cnpj: "1",
@@ -39,7 +39,7 @@ void main() {
     customerUseCaseMock = MockCustomerUseCase();
     sut = GetxCustomerDetailPagePresenter(customerUseCaseMock);
     when(customerUseCaseMock.getCustomerDetail("1"))
-        .thenAnswer((_) async => _defaultCustomerDetail);
+        .thenAnswer((_) async => defaultCustomerDetail);
   });
 
   test("should call use case to get customer detail", () async {
@@ -47,18 +47,25 @@ void main() {
     verify(customerUseCaseMock.getCustomerDetail("1")).called(1);
   });
 
-  test("should update loading to true when getCustomerDetail is called", () async {
+  test("should update loading to true when getCustomerDetail is called",
+      () async {
     when(customerUseCaseMock.getCustomerDetail("1")).thenAnswer((_) async {
       await Future.delayed(const Duration(milliseconds: 500));
-      return _defaultCustomerDetail;
+      return defaultCustomerDetail;
     });
 
-    expect(sut.isLoading, false);
+    expect(sut.isLoading.value, false);
 
     sut.getCustomerDetail("1");
 
-    expect(sut.isLoading, true);
+    expect(sut.isLoading.value, true);
     await Future.delayed(const Duration(milliseconds: 500));
-    expect(sut.isLoading, false);
+    expect(sut.isLoading.value, false);
+  });
+
+  test("get customerDetail should return internal _customerDetail", () async {
+    expect(sut.customerDetail, null);
+    await sut.getCustomerDetail("1");
+    expect(sut.customerDetail, defaultCustomerDetail);
   });
 }

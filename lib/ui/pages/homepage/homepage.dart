@@ -22,7 +22,7 @@ class Homepage extends StatelessWidget {
     }
 
     void onTapCustomer(Customer customer) {
-      Get.toNamed("/customer/${customer.id}");
+      homepagePresenter.onTapCustomer(customer);
     }
 
     return Scaffold(
@@ -35,9 +35,10 @@ class Homepage extends StatelessWidget {
           homepagePresenter.loadData();
         },
         child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
-              Obx(() => homepagePresenter.loading
+              Obx(() => homepagePresenter.loading.value
                   ? const LinearProgressIndicator()
                   : const SizedBox(height: 4)),
               Padding(

@@ -10,14 +10,14 @@ class GetxHomepagePresenter extends GetxController
   GetxHomepagePresenter(this.customerUseCase);
 
   final RxList<Customer> _customers = <Customer>[].obs;
-  final Rx<bool> _loading = false.obs;
+  final RxBool _loading = false.obs;
   String? _searchQuery;
 
   @override
-  List<Customer> get customers => _customers;
+  RxList<Customer> get customers => _customers;
 
   @override
-  bool get loading => _loading.value;
+  RxBool get loading => _loading;
 
   @override
   Future<void> loadData() async {
@@ -35,5 +35,10 @@ class GetxHomepagePresenter extends GetxController
       _searchQuery = query;
     }
     return loadData();
+  }
+
+  @override
+  Future<void> onTapCustomer(Customer customer) async {
+    Get.toNamed("/customer/${customer.id}");
   }
 }

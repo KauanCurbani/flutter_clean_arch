@@ -15,14 +15,14 @@ class CustomerDetailsPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Obx(() => Text(presenter.isLoading
+        title: Obx(() => Text(presenter.isLoading.value
             ? 'Carregando...'
             : presenter.customerDetail!.name)),
         elevation: 1,
       ),
       body: Column(
         children: [
-          Obx(() => presenter.isLoading
+          Obx(() => presenter.isLoading.value
               ? SizedBox(
                   height: MediaQuery.of(context).size.height / 2,
                   child: const Center(child: CircularProgressIndicator()))
