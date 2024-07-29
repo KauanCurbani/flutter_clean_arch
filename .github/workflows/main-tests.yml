@@ -28,7 +28,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.2'
+          flutter-version: "3.22.2"
 
       - name: Install dependencies
         run: flutter pub get
@@ -37,7 +37,7 @@ jobs:
         run: flutter test
 
       - name: Run build
-        run: flutter build web
+        run: flutter build web --dart-define=API_URL=${{ secrets.API_URL }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -45,10 +45,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './build/web'
+          path: "./build/web"
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-      
