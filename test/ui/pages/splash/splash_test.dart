@@ -19,9 +19,14 @@ void main() {
     ));
   }
 
+  setUp(() {
+    Get.reset();
+    presenter = MockSplashPresenter();
+    Get.put<SplashPresenter>(presenter);
+  });
+
   testWidgets('should call loadData on page load', (WidgetTester tester) async {
     await makeRender(tester);
-
     verify(presenter.loadData()).called(1);
   });
 

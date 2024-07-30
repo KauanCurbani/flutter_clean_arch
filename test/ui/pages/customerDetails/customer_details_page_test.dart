@@ -13,7 +13,7 @@ import 'customer_details_page_test.mocks.dart';
 void main() {
   CustomerDetailsPagePresenter presenter = MockCustomerDetailsPagePresenter();
   CustomerDetail defaultCustomerDetail = CustomerDetail(
-      id: "1",
+      id: "1", 
       externalCode: "1",
       cnpj: "1",
       ie: "1",
